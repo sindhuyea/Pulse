@@ -1,0 +1,42 @@
+.body-check-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-l) var(--space-m) var(--space-xl);
+}
+
+.body-check-screen .screen-header {
+  text-align: center;
+  margin-bottom: var(--space-m);
+}
+
+.body-check-screen .screen-title {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.body-check-screen .screen-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.body-check-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+
+.body-check-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  align-items: center;
+  padding-top: var(--space-l);
+}
+
+/* Button styles moved to index.css for global consistency */

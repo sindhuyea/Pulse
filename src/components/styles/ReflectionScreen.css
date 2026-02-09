@@ -1,0 +1,84 @@
+.reflection-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-l) var(--space-m) var(--space-xl);
+}
+
+.reflection-screen .screen-header {
+  text-align: center;
+  margin-bottom: var(--space-l);
+}
+
+.reflection-screen .screen-title {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.reflection-screen .screen-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.haiku-block {
+  margin-bottom: var(--space-xl);
+}
+
+.haiku-bubble {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-m);
+  background: var(--surface-color);
+  padding: var(--space-l);
+  margin-bottom: var(--space-s);
+}
+
+.haiku-line {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.7s var(--ease-in-out), transform 0.7s var(--ease-in-out);
+}
+
+.haiku-line:last-child {
+  margin-bottom: 0;
+}
+
+.haiku-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.haiku-refresh {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.haiku-refresh:hover {
+  color: var(--text-primary);
+}
+
+.reflection-preferences {
+  margin-bottom: var(--space-xl);
+}
+
+.reflection-cta {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Button styles moved to index.css for global consistency */

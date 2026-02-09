@@ -1,0 +1,180 @@
+.calibration-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-l) var(--space-m) var(--space-xl);
+}
+
+.calibration-header {
+  text-align: center;
+  margin-bottom: var(--space-l);
+}
+
+.calibration-title {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.calibration-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.calibration-body-wrap {
+  cursor: crosshair;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+
+.calibration-body-wrap:focus {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 4px;
+}
+
+.calibration-preview-orb {
+  position: absolute;
+  width: 31px;
+  height: 31px;
+  margin-left: -15.5px;
+  margin-top: -15.5px;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calibration-preview-orb .orb-center {
+  position: relative;
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  transform: translate(0, 0);
+}
+
+/* Codepen-style ripple (matches BodyOutline): smaller, concentric, centered. */
+.calibration-preview-orb .orb-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 31px;
+  height: 31px;
+}
+
+.calibration-preview-orb .orb-glow::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 110%;
+  height: 110%;
+  margin-left: -55%;
+  margin-top: -55%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation-delay: 0.25s;
+  transform-origin: 50% 50%;
+  box-sizing: border-box;
+}
+
+.calibration-preview-orb .orb-glow::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90%;
+  height: 90%;
+  margin-left: -45%;
+  margin-top: -45%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation-delay: 0s;
+  transform-origin: 50% 50%;
+  box-sizing: border-box;
+}
+
+.calibration-preview-orb .orb-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.calibration-preview-orb .orb-ring-90 {
+  width: 70%;
+  height: 70%;
+  margin-left: -35%;
+  margin-top: -35%;
+  animation-delay: 0.12s;
+}
+
+.calibration-preview-orb .orb-ring-75 {
+  width: 50%;
+  height: 50%;
+  margin-left: -25%;
+  margin-top: -25%;
+  animation-delay: 0.35s;
+}
+
+.calibration-preview-orb .orb-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30%;
+  height: 30%;
+  margin-left: -15%;
+  margin-top: -15%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation-delay: 0.5s;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.calibration-preview-orb-pending .orb-glow::after {
+  box-shadow: 0 0 0 2px var(--accent-lavender-neon);
+}
+
+@keyframes orb-pulse-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.88);
+  }
+}
+
+.calibration-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  align-items: center;
+  padding-top: var(--space-l);
+}
+
+/* Button styles moved to index.css for global consistency */
+
+.calibration-step {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-secondary);
+}

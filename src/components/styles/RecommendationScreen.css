@@ -1,0 +1,39 @@
+.recommendation-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-l) var(--space-m) var(--space-xl);
+}
+
+.recommendation-screen .screen-header {
+  text-align: center;
+  margin-bottom: var(--space-l);
+}
+
+.recommendation-screen .screen-title {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.recommendation-screen .screen-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  flex: 1;
+  margin-bottom: var(--space-l);
+}
+
+.recommendation-more {
+  display: flex;
+  justify-content: center;
+}
+
+/* Button styles moved to index.css for global consistency */

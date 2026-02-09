@@ -1,0 +1,67 @@
+/* Reusable animation classes for Pulse — slow, soft, editorial */
+
+/* Breathing / pulse glow — used on home and orbs */
+@keyframes breathe {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.008); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { filter: blur(40px) opacity(0.35); transform: scale(1); }
+  50% { filter: blur(48px) opacity(0.5); transform: scale(1.02); }
+}
+
+@keyframes orb-pulse {
+  0%, 100% { opacity: 0.75; transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 18px rgba(217, 197, 224, 0.4); }
+  50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.03); box-shadow: 0 0 26px rgba(217, 197, 224, 0.55); }
+}
+
+.animate-breathe {
+  animation: breathe 6s var(--ease-in-out) infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s var(--ease-in-out) infinite;
+}
+
+.animate-orb-pulse {
+  animation: orb-pulse 4s var(--ease-in-out) infinite;
+}
+
+/* Fade in line by line */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--duration-m) var(--ease-in-out) forwards;
+}
+
+/* Card hover — micro-scale, soft glow */
+.card-lift {
+  transition: transform var(--duration-m) var(--ease-in-out), box-shadow var(--duration-m) var(--ease-in-out);
+}
+
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(67, 58, 67, 0.06);
+}
+
+/* Ripple */
+@keyframes ripple {
+  to { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+}
+
+.ripple-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent-lavender-neon);
+  opacity: 0.5;
+  animation: ripple 1s var(--ease-in-out) forwards;
+  pointer-events: none;
+}

@@ -1,0 +1,255 @@
+.body-outline-wrap {
+  position: relative;
+  width: 100%;
+  max-width: min(260px, 65vw);
+  margin: 0 auto;
+  aspect-ratio: 289 / 577;
+  color: var(--text-primary);
+}
+
+.body-svg-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body-svg-inner svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Button: center is at (left, top). Content centered with flex so glow and dot share one origin. */
+.body-orb {
+  position: absolute;
+  width: 31px;
+  height: 31px;
+  margin-left: -15.5px;
+  margin-top: -15.5px;
+  left: 0;
+  top: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fixed-size box: glow fills it, dot is centered in it. Both share this box’s center. */
+.body-orb .orb-center {
+  position: relative;
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  pointer-events: none;
+  transform: translate(0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Orb container – Codepen-style ripple; smaller to avoid overlap. */
+.body-orb .orb-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 31px;
+  height: 31px;
+  transition: transform var(--duration-m) var(--ease-in-out);
+}
+
+/* Outer ring – thinner lines, more inward, wider spacing. */
+.body-orb .orb-glow::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 110%;
+  height: 110%;
+  margin-left: -55%;
+  margin-top: -55%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation-delay: 0.25s;
+  transform-origin: 50% 50%;
+  box-sizing: border-box;
+}
+
+/* Second ring – wider spacing (110 → 90 → 70 → 50 → 30, 20% apart). */
+.body-orb .orb-glow::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90%;
+  height: 90%;
+  margin-left: -45%;
+  margin-top: -45%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation-delay: 0s;
+  transform-origin: 50% 50%;
+  box-sizing: border-box;
+}
+
+/* Extra concentric rings – wider spacing (70%, 50%). */
+.body-orb .orb-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.body-orb .orb-ring-90 {
+  width: 70%;
+  height: 70%;
+  margin-left: -35%;
+  margin-top: -35%;
+  animation-delay: 0.12s;
+}
+
+.body-orb .orb-ring-75 {
+  width: 50%;
+  height: 50%;
+  margin-left: -25%;
+  margin-top: -25%;
+  animation-delay: 0.35s;
+}
+
+/* Innermost ring (30%) – wider spacing. */
+.body-orb .orb-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30%;
+  height: 30%;
+  margin-left: -15%;
+  margin-top: -15%;
+  border-radius: 50%;
+  border: 1px solid var(--accent-lavender);
+  background: transparent;
+  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation-delay: 0.5s;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.body-orb:hover .orb-glow,
+.body-orb:focus-visible .orb-glow,
+.body-orb.selected .orb-glow {
+  transform: scale(1.2);
+}
+
+.body-orb:hover .orb-glow::before,
+.body-orb:hover .orb-glow::after,
+.body-orb:hover .orb-glow .orb-ring,
+.body-orb:hover .orb-glow .orb-dot,
+.body-orb:focus-visible .orb-glow::before,
+.body-orb:focus-visible .orb-glow::after,
+.body-orb:focus-visible .orb-glow .orb-ring,
+.body-orb:focus-visible .orb-glow .orb-dot,
+.body-orb.selected .orb-glow::before,
+.body-orb.selected .orb-glow::after,
+.body-orb.selected .orb-glow .orb-ring,
+.body-orb.selected .orb-glow .orb-dot {
+  animation: none;
+  border-color: var(--accent-lavender);
+}
+
+.body-orb.selected .orb-glow .orb-dot {
+  background: rgba(217, 197, 224, 0.6);
+}
+
+@keyframes orb-pulse-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.88);
+  }
+}
+
+/* Side labels: to the RIGHT of outline. */
+.body-labels-side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  margin-left: 10px;
+  width: 88px;
+  pointer-events: none;
+}
+
+/* Each label at the vertical height of its orb; left-aligned so text sits just right of outline. */
+.body-label {
+  position: absolute;
+  left: 0;
+  transform: translate(0, -50%);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  text-align: left;
+}
+
+.body-label-hover {
+  animation: body-label-fade-side 0.25s var(--ease-in-out) forwards;
+}
+
+.body-label-selected {
+  /* No animation – label just stays (e.g. after hover slide-in). */
+}
+
+.body-label-exit {
+  animation: body-label-slide-out 0.25s var(--ease-in-out) forwards;
+}
+
+@keyframes body-label-fade-side {
+  from {
+    opacity: 0;
+    transform: translate(0, -50%) translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -50%) translateX(0);
+  }
+}
+
+@keyframes body-label-slide-out {
+  from {
+    opacity: 1;
+    transform: translate(0, -50%) translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(0, -50%) translateX(-8px);
+  }
+}
+
+@media (min-width: 400px) {
+  .body-labels-side {
+    margin-left: 12px;
+    width: 96px;
+  }
+  .body-label {
+    font-size: 15px;
+  }
+}

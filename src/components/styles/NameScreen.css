@@ -1,0 +1,67 @@
+.name-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl) var(--space-m) var(--space-xl);
+}
+
+.name-screen .screen-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.name-screen .screen-title {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.name-screen .screen-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.name-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.name-input {
+  width: 100%;
+  max-width: 280px;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  color: var(--text-primary);
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-m);
+  padding: var(--space-m) var(--space-l);
+  transition: border-color var(--duration-m) var(--ease-in-out), box-shadow var(--duration-m) var(--ease-in-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.name-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.name-input:hover {
+  border-color: rgba(67, 58, 67, 0.2);
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 1px var(--text-primary);
+}
+
+.name-form .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

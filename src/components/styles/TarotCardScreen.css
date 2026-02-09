@@ -1,0 +1,116 @@
+.tarot-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-l) var(--space-m) var(--space-xl);
+}
+
+.tarot-screen .screen-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.tarot-screen .screen-title {
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.tarot-screen .screen-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.tarot-cards {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-m);
+  flex: 1;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tarot-card {
+  width: 100px;
+  height: 140px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  perspective: 400px;
+  -webkit-tap-highlight-color: transparent;
+  animation: tarot-float 6s var(--ease-in-out) infinite;
+}
+
+.tarot-card:nth-child(1) { animation-delay: 0s; }
+.tarot-card:nth-child(2) { animation-delay: 0.5s; }
+.tarot-card:nth-child(3) { animation-delay: 1s; }
+
+.tarot-card:hover {
+  animation: none;
+}
+
+.tarot-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.9s var(--ease-in-out);
+  transform-style: preserve-3d;
+}
+
+.tarot-card:hover:not(.flipped) .tarot-card-inner,
+.tarot-card:focus-visible:not(.flipped) .tarot-card-inner {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.tarot-card.flipped .tarot-card-inner {
+  transform: rotateY(180deg);
+}
+
+.tarot-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border: 1px solid var(--text-primary);
+  border-radius: var(--radius-m);
+  background: var(--surface-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(67, 58, 67, 0.05);
+  transition: box-shadow var(--duration-m) var(--ease-in-out);
+}
+
+.tarot-card:hover .tarot-card-face {
+  box-shadow: 0 8px 24px rgba(67, 58, 67, 0.08);
+}
+
+.tarot-card-back {
+  transform: rotateY(180deg);
+  background: var(--accent-taupe);
+}
+
+.tarot-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--text-primary);
+}
+
+.tarot-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tarot-card-label {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+@keyframes tarot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}

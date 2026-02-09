@@ -1,0 +1,57 @@
+.home-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-m);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-glow {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(
+    circle,
+    var(--accent-lavender-neon) 0%,
+    var(--accent-taupe) 50%,
+    transparent 70%
+  );
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.home-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.home-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 10vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-s);
+}
+
+.home-tagline {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.home-cta-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* Button styles moved to index.css for global consistency */
