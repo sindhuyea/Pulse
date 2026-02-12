@@ -197,7 +197,7 @@
 /* Label: soft fade in when value changes */
 .pref-figma-label {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
   color: #5A4D5D;
   text-transform: lowercase;

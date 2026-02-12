@@ -3,7 +3,6 @@ import HomeScreen from './components/screens/HomeScreen'
 import NameScreen from './components/screens/NameScreen'
 import BodyCheckScreen from './components/screens/BodyCheckScreen'
 import TarotCardScreen from './components/screens/TarotCardScreen'
-import PoemScreen from './components/screens/PoemScreen'
 import ReflectionScreen from './components/screens/ReflectionScreen'
 import RecommendationScreen from './components/screens/RecommendationScreen'
 import InsightsScreen from './components/screens/InsightsScreen'
@@ -15,7 +14,7 @@ import {
   setPreference,
   getStressInputSummary,
 } from './state/inputState'
-import { getHaiku, getRecommendations } from './lib/mockAI'
+import { getRecommendations } from './lib/mockAI'
 import './index.css'
 import './lib/animations.css'
 
@@ -28,13 +27,11 @@ function appReducer(state, action) {
     case 'TOGGLE_BODY_AREA':
       return toggleBodyArea(state, action.area)
     case 'CONFIRM_BODY':
-      return { ...state, screen: 'poem' }
+      return { ...state, screen: 'reflection' }
     case 'I_DONT_KNOW':
       return { ...state, screen: 'tarot' }
     case 'SELECT_TAROT':
-      return { ...state, ...setTarotChoice(state, action.cardId), screen: 'poem' }
-    case 'POEM_DONE':
-      return { ...state, screen: 'reflection' }
+      return { ...state, ...setTarotChoice(state, action.cardId), screen: 'reflection' }
     case 'SET_PREFERENCE':
       return setPreference(state, action.key, action.value)
     case 'GUIDE_ME':
@@ -106,15 +103,6 @@ export default function App() {
         </div>
       )}
 
-      {state.screen === 'poem' && (
-        <div key="poem" className="screen-enter">
-          <PoemScreen
-            inputSummary={inputSummary}
-            onContinue={() => dispatch({ type: 'POEM_DONE' })}
-          />
-        </div>
-      )}
-
       {state.screen === 'reflection' && (
         <div key="reflection" className="screen-enter">
           <ReflectionScreen
@@ -131,7 +119,6 @@ export default function App() {
         <div key="recommendations" className="screen-enter">
           <RecommendationScreen
             recommendations={recommendations}
-            inputSummary={inputSummary}
             onMore={() => dispatch({ type: 'MORE' })}
             onViewInsights={() => dispatch({ type: 'VIEW_INSIGHTS' })}
           />

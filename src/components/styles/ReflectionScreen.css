@@ -72,7 +72,133 @@
 }
 
 .reflection-preferences {
+  margin-bottom: var(--space-l);
+}
+
+.reflection-anything-else {
+  margin-bottom: var(--space-l);
+}
+
+.reflection-anything-else-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  margin-bottom: var(--space-xs);
+}
+
+.reflection-anything-else-label {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.reflection-ask-prompt {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reflection-ask-prompt:hover {
+  color: var(--text-primary);
+}
+
+.reflection-anything-else-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-primary);
+  background: var(--surface-color);
+  border: 1px solid var(--text-primary);
+  border-radius: var(--radius-m);
+  padding: var(--space-s) var(--space-m);
+  resize: vertical;
+  min-height: 72px;
+}
+
+.reflection-anything-else-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.reflection-anything-else-input:focus {
+  outline: none;
+  border-color: var(--accent-lavender);
+}
+
+.reflection-voice-note {
   margin-bottom: var(--space-xl);
+}
+
+.reflection-voice-note-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--space-s);
+}
+
+.reflection-voice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--surface-color);
+  border: 1px solid var(--text-primary);
+  border-radius: var(--radius-m);
+  padding: var(--space-s) var(--space-m);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reflection-voice-btn:hover {
+  opacity: 0.9;
+}
+
+.reflection-voice-btn.recording {
+  background: var(--accent-lavender);
+  border-color: var(--text-primary);
+}
+
+.reflection-voice-playback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-m);
+}
+
+.reflection-voice-audio {
+  height: 36px;
+  max-width: 100%;
+}
+
+.reflection-voice-rerecord {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reflection-voice-rerecord:hover {
+  color: var(--text-primary);
 }
 
 .reflection-cta {
