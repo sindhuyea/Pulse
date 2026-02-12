@@ -32,11 +32,14 @@ export default function BodyCheckScreen({
       </div>
 
       <div className="body-check-actions">
-        {canConfirm && (
-          <button type="button" className="btn-pill btn-primary" onClick={onConfirm}>
-            continue →
-          </button>
-        )}
+        <button
+          type="button"
+          className="btn-pill btn-primary"
+          disabled={!canConfirm}
+          onClick={canConfirm ? onConfirm : undefined}
+        >
+          continue →
+        </button>
         <button type="button" className="btn-pill btn-secondary" onClick={onIDontKnow}>
           I don't know
         </button>

@@ -1,67 +1,592 @@
+/* Figma Make–style toggles: polished track, themed backgrounds, soft motion */
+
 .preference-toggles {
   width: 100%;
-}
-
-.preference-prompt {
-  font-family: var(--font-sans);
-  font-size: 15px;
-  color: var(--text-primary);
-  margin-bottom: var(--space-m);
 }
 
 .preference-row {
   display: flex;
   justify-content: space-between;
-  gap: var(--space-s);
+  gap: var(--space-l);
   flex-wrap: wrap;
 }
 
-.preference-group {
+/* Wrapper per toggle: column, label below */
+.pref-figma-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  gap: 16px;
   flex: 1;
-  min-width: 80px;
+  min-width: 0;
 }
 
-.preference-label-top,
-.preference-label-bottom {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--text-primary);
-}
-
-.preference-label-bottom {
-  color: var(--text-secondary);
-  font-size: 11px;
-}
-
-.preference-pill {
-  width: 44px;
-  height: 24px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border-color);
-  background: var(--surface-color);
-  cursor: pointer;
+/* Track: pill, border, shadow, 300ms ease */
+.pref-figma-track {
   position: relative;
+  width: 80px;
+  height: 40px;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid #9B8A9E;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
   padding: 0;
-  transition: box-shadow var(--duration-m) var(--ease-in-out);
+  transition: box-shadow 0.28s ease-in-out, transform 0.2s ease-in-out;
   -webkit-tap-highlight-color: transparent;
 }
 
-.preference-pill:hover {
-  box-shadow: 0 2px 10px rgba(67, 58, 67, 0.06);
+.pref-figma-track:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
 }
 
-.preference-knob {
+.pref-figma-track:active {
+  transform: scale(0.98);
+}
+
+/* Background layers: crossfade in sync with thumb */
+.pref-figma-bg {
   position: absolute;
-  left: 2px;
-  top: 2px;
-  width: 18px;
-  height: 18px;
+  inset: 0;
+  transition: opacity 0.32s ease-in-out;
+}
+
+.pref-figma-bg-on {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.pref-figma-bg-off {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Shared gradient bases (Figma palette) */
+.pref-figma-gradient {
+  position: absolute;
+  inset: 0;
+}
+
+.pref-figma-gradient-calm,
+.pref-figma-gradient-warm,
+.pref-figma-gradient-interior,
+.pref-figma-gradient-sky {
+  background: linear-gradient(to bottom right, #E8E4E8, #F2EFF2, #DED6E1);
+}
+
+.pref-figma-gradient-energetic {
+  background: linear-gradient(to bottom right, #DED6E1, #E8E4E8, #D0C2D4);
+}
+
+/* Thumb: circle, quick ease */
+.pref-figma-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: var(--accent-lavender-neon);
-  border: 1px solid var(--text-primary);
-  transition: transform 0.5s var(--ease-in-out);
+  background: #C4B5C8;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.32s ease-in-out;
+  pointer-events: none;
+}
+
+.pref-figma-thumb-left {
+  transform: translateX(0);
+}
+
+.pref-figma-thumb-right {
+  transform: translateX(40px);
+}
+
+.pref-figma-icon {
+  color: rgba(107, 92, 110, 0.6);
+  flex-shrink: 0;
+}
+
+/* Sparkle on toggle use */
+.pref-sparkle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pref-sparkle-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #C28AC9;
+  box-shadow: 0 0 6px rgba(194, 138, 201, 0.8);
+  animation: pref-sparkle-twinkle 0.5s var(--ease-calm) forwards;
+  opacity: 0;
+}
+
+.pref-sparkle-dot-2 {
+  animation-delay: 0.05s;
+  transform: translate(-8px, -4px);
+}
+
+.pref-sparkle-dot-3 {
+  animation-delay: 0.1s;
+  transform: translate(6px, -6px);
+}
+
+@keyframes pref-sparkle-twinkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.pref-sparkle-dot-2 {
+  animation-name: pref-sparkle-twinkle-2;
+}
+
+.pref-sparkle-dot-3 {
+  animation-name: pref-sparkle-twinkle-3;
+}
+
+@keyframes pref-sparkle-twinkle-2 {
+  0% {
+    opacity: 0;
+    transform: translate(-8px, -4px) scale(0.3);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-8px, -4px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-8px, -4px) scale(0.8);
+  }
+}
+
+@keyframes pref-sparkle-twinkle-3 {
+  0% {
+    opacity: 0;
+    transform: translate(6px, -6px) scale(0.3);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(6px, -6px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(6px, -6px) scale(0.8);
+  }
+}
+
+/* Label: soft fade in when value changes */
+.pref-figma-label {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 500;
+  color: #5A4D5D;
+  text-transform: lowercase;
+  animation: pref-label-fade-in 0.55s var(--ease-calm) forwards;
+}
+
+@keyframes pref-label-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Decorative details: absolute positions, muted purples */
+.pref-figma-detail {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* --- Alone scene --- */
+.pref-alone-spotlight {
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  background: rgba(208, 194, 212, 0.2);
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+.pref-alone-chair {
+  right: 8px;
+  bottom: 0;
+  width: 8px;
+  height: 12px;
+  background: rgba(196, 181, 200, 0.3);
+  border-radius: 2px 2px 0 0;
+}
+
+.pref-alone-tree {
+  right: 20px;
+  bottom: 0;
+  width: 2px;
+  height: 10px;
+  background: rgba(196, 181, 200, 0.25);
+}
+
+.pref-alone-meditation {
+  left: 8px;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(196, 181, 200, 0.3);
+  border-radius: 50%;
+}
+
+/* --- Together scene --- */
+.pref-together-glow-1 {
+  right: 8px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  background: rgba(222, 214, 225, 0.3);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+.pref-together-glow-2 {
+  right: 16px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  background: rgba(208, 194, 212, 0.3);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+.pref-together-person-1 {
+  right: 8px;
+  bottom: 0;
+  width: 6px;
+  height: 10px;
+  background: rgba(196, 181, 200, 0.3);
+  border-radius: 2px 2px 0 0;
+}
+
+.pref-together-person-2 {
+  right: 16px;
+  bottom: 0;
+  width: 6px;
+  height: 8px;
+  background: rgba(184, 168, 188, 0.25);
+  border-radius: 2px 2px 0 0;
+}
+
+.pref-together-person-3 {
+  right: 24px;
+  bottom: 0;
+  width: 6px;
+  height: 12px;
+  background: rgba(196, 181, 200, 0.25);
+  border-radius: 2px 2px 0 0;
+}
+
+.pref-together-trees {
+  left: 4px;
+  bottom: 0;
+  width: 2px;
+  height: 8px;
+  background: rgba(196, 181, 200, 0.25);
+}
+
+.pref-together-heart {
+  left: 8px;
+  top: 4px;
+  width: 4px;
+  height: 4px;
+  background: rgba(222, 214, 225, 0.4);
+  transform: rotate(45deg);
+  border-radius: 1px 1px 0 0;
+}
+
+/* --- Inside scene --- */
+.pref-inside-furniture-1 {
+  right: 8px;
+  bottom: 0;
+  width: 8px;
+  height: 12px;
+  background: rgba(196, 181, 200, 0.3);
+  border-radius: 2px 2px 0 0;
+}
+
+.pref-inside-furniture-2 {
+  right: 20px;
+  bottom: 0;
+  width: 10px;
+  height: 8px;
+  background: rgba(184, 168, 188, 0.2);
+  border-radius: 2px 2px 0 0;
+}
+
+.pref-inside-window {
+  right: 4px;
+  top: 4px;
+  width: 10px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(196, 181, 200, 0.3);
+  border-radius: 2px;
+}
+
+.pref-inside-glow {
+  right: 12px;
+  bottom: 4px;
+  width: 12px;
+  height: 12px;
+  background: rgba(222, 214, 225, 0.4);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+/* --- Outside scene --- */
+.pref-outside-moon {
+  right: 8px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: #DED6E1;
+  border-radius: 50%;
+}
+
+.pref-outside-moon-glow {
+  right: 8px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: rgba(196, 181, 200, 0.3);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+.pref-outside-cloud-1 {
+  left: 4px;
+  top: 6px;
+  width: 12px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+}
+
+.pref-outside-cloud-2 {
+  left: 20px;
+  top: 8px;
+  width: 10px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 9999px;
+}
+
+.pref-outside-tree-1 {
+  right: 12px;
+  bottom: 0;
+  width: 2px;
+  height: 12px;
+  background: rgba(196, 181, 200, 0.3);
+}
+
+.pref-outside-tree-2 {
+  right: 11px;
+  bottom: 8px;
+  width: 8px;
+  height: 8px;
+  background: rgba(208, 194, 212, 0.4);
+  border-radius: 50%;
+}
+
+.pref-outside-tree-3 {
+  right: 20px;
+  bottom: 0;
+  width: 2px;
+  height: 14px;
+  background: rgba(184, 168, 188, 0.25);
+}
+
+.pref-outside-tree-canopy-2 {
+  right: 19px;
+  bottom: 10px;
+  width: 10px;
+  height: 10px;
+  background: rgba(222, 214, 225, 0.4);
+  border-radius: 50%;
+}
+
+.pref-outside-grass {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to top, rgba(208, 194, 212, 0.2), transparent);
+  border-radius: 0 0 9999px 9999px;
+}
+
+/* --- Quick scene --- */
+.pref-quick-streak-1 {
+  left: 4px;
+  top: 10px;
+  width: 16px;
+  height: 2px;
+  background: rgba(196, 181, 200, 0.4);
+  border-radius: 9999px;
+}
+
+.pref-quick-streak-2 {
+  left: 8px;
+  top: 16px;
+  width: 20px;
+  height: 2px;
+  background: rgba(184, 168, 188, 0.3);
+  border-radius: 9999px;
+}
+
+.pref-quick-streak-3 {
+  left: 6px;
+  top: 22px;
+  width: 14px;
+  height: 2px;
+  background: rgba(196, 181, 200, 0.3);
+  border-radius: 9999px;
+}
+
+.pref-quick-bolt {
+  right: 8px;
+  top: 4px;
+  width: 2px;
+  height: 8px;
+  background: rgba(208, 194, 212, 0.5);
+  transform: skewX(-12deg);
+}
+
+.pref-quick-circle {
+  right: 16px;
+  bottom: 8px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(196, 181, 200, 0.3);
+  border-radius: 50%;
+}
+
+.pref-quick-particle-1 {
+  left: 12px;
+  top: 6px;
+  width: 2px;
+  height: 2px;
+  background: rgba(184, 168, 188, 0.5);
+  border-radius: 50%;
+}
+
+.pref-quick-particle-2 {
+  left: 20px;
+  top: 24px;
+  width: 2px;
+  height: 2px;
+  background: rgba(196, 181, 200, 0.4);
+  border-radius: 50%;
+}
+
+.pref-quick-particle-3 {
+  right: 16px;
+  top: 20px;
+  width: 2px;
+  height: 2px;
+  background: rgba(208, 194, 212, 0.4);
+  border-radius: 50%;
+}
+
+/* --- Slow scene --- */
+.pref-slow-waves-1 {
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(to top, rgba(222, 214, 225, 0.15), transparent);
+  border-radius: 9999px;
+}
+
+.pref-slow-waves-2 {
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(to top, rgba(208, 194, 212, 0.1), transparent);
+  border-radius: 9999px;
+}
+
+.pref-slow-cloud-1 {
+  right: 12px;
+  top: 6px;
+  width: 10px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+}
+
+.pref-slow-cloud-2 {
+  right: 16px;
+  top: 4px;
+  width: 6px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 9999px;
+}
+
+.pref-slow-stone-1 {
+  left: 8px;
+  bottom: 4px;
+  width: 8px;
+  height: 2px;
+  background: rgba(196, 181, 200, 0.25);
+  border-radius: 9999px;
+}
+
+.pref-slow-stone-2 {
+  left: 16px;
+  bottom: 6px;
+  width: 6px;
+  height: 2px;
+  background: rgba(208, 194, 212, 0.2);
+  border-radius: 9999px;
+}
+
+.pref-slow-curve {
+  left: 6px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(222, 214, 225, 0.2);
+  border-radius: 50%;
+}
+
+.pref-slow-ripple {
+  right: 20px;
+  bottom: 16px;
+  width: 8px;
+  height: 2px;
+  background: rgba(222, 214, 225, 0.25);
+  border-radius: 9999px;
+  filter: blur(2px);
 }

@@ -5,7 +5,7 @@ import { BackgroundPaths } from '../ui/background-paths'
 export default function HomeScreen({ onCheckIn }) {
   return (
     <div className="screen home-screen">
-      <BackgroundPaths backgroundOnly={true} color="#C2B4C6" />
+      <BackgroundPaths backgroundOnly={true} color="#C28AC9" />
       <div className="holo-blur home-glow animate-pulse-glow" aria-hidden />
       <header className="home-header">
         <h1 className="home-title">Pulse</h1>
@@ -14,7 +14,7 @@ export default function HomeScreen({ onCheckIn }) {
       <div className="home-cta-wrap">
         <button
           type="button"
-          className="btn-pill btn-cta animate-breathe"
+          className="btn-pill btn-primary btn-cta animate-breathe"
           onClick={onCheckIn}
         >
           start check in →

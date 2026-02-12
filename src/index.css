@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+
+@font-face {
+  font-family: 'Neue Haas Unica Pro';
+  src: url('./assets/fonts/Neue Haas Unica Pro.ttf') format('truetype');
+  font-weight: 300 600;
+  font-style: normal;
+  font-display: swap;
+}
 
 @import 'tailwindcss';
 
@@ -63,7 +71,7 @@
   --radius-pill: 100px;
 
   --font-serif: 'Cormorant Garamond', serif;
-  --font-sans: 'Manrope', sans-serif;
+  --font-sans: 'Neue Haas Unica Pro', sans-serif;
 
   /* Animation — slow easing, no sharp snapping */
   --ease-calm: cubic-bezier(0.4, 0, 0.2, 1);
@@ -200,7 +208,7 @@ svg {
   animation: screen-enter var(--duration-slow) var(--ease-in-out) forwards;
 }
 
-/* Global button styles – consistent across all screens */
+/* Global button styles – consistent across all screens (same size as home CTA) */
 .btn-pill {
   font-family: var(--font-sans);
   font-size: 16px;
@@ -209,7 +217,7 @@ svg {
   background: var(--bg-color);
   border: 1px solid var(--text-primary);
   border-radius: var(--radius-pill);
-  padding: var(--space-s) var(--space-l);
+  padding: var(--space-m) var(--space-xl);
   cursor: pointer;
   transition: opacity var(--duration-m) var(--ease-in-out), transform var(--duration-m) var(--ease-in-out), background var(--duration-m) var(--ease-in-out), border-color var(--duration-m) var(--ease-in-out);
   -webkit-tap-highlight-color: transparent;
@@ -221,6 +229,16 @@ svg {
 
 .btn-pill:active {
   transform: scale(0.992);
+}
+
+.btn-pill:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-pill:disabled:active {
+  transform: none;
 }
 
 .btn-primary {
@@ -235,10 +253,5 @@ svg {
 }
 
 .btn-cta {
-  padding: var(--space-m) var(--space-xl);
-}
-
-.btn-large {
-  padding: var(--space-m) var(--space-xl);
-  font-size: 17px;
+  /* Same size as default .btn-pill; use for semantic “main CTA” only */
 }

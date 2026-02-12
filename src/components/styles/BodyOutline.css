@@ -5,6 +5,7 @@
   margin: 0 auto;
   aspect-ratio: 289 / 577;
   color: var(--text-primary);
+  --orb-line-color: #C28AC9;
 }
 
 .body-svg-inner {
@@ -76,10 +77,10 @@
   margin-left: -55%;
   margin-top: -55%;
   border-radius: 50%;
-  border: 1px solid var(--accent-lavender);
+  border: 1px solid var(--orb-line-color);
   background: transparent;
-  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
-  animation-delay: 0.25s;
+  animation: orb-pulse-breathe var(--orb-duration, 1.25s) var(--ease-in-out) infinite alternate;
+  animation-delay: calc(var(--orb-delay, 0s) + 0.25s);
   transform-origin: 50% 50%;
   box-sizing: border-box;
 }
@@ -95,10 +96,10 @@
   margin-left: -45%;
   margin-top: -45%;
   border-radius: 50%;
-  border: 1px solid var(--accent-lavender);
+  border: 1px solid var(--orb-line-color);
   background: transparent;
-  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
-  animation-delay: 0s;
+  animation: orb-pulse-breathe var(--orb-duration, 1.25s) var(--ease-in-out) infinite alternate;
+  animation-delay: var(--orb-delay, 0s);
   transform-origin: 50% 50%;
   box-sizing: border-box;
 }
@@ -109,9 +110,9 @@
   left: 50%;
   top: 50%;
   border-radius: 50%;
-  border: 1px solid var(--accent-lavender);
+  border: 1px solid var(--orb-line-color);
   background: transparent;
-  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
+  animation: orb-pulse-breathe var(--orb-duration, 1.25s) var(--ease-in-out) infinite alternate;
   transform-origin: 50% 50%;
   pointer-events: none;
   box-sizing: border-box;
@@ -122,7 +123,7 @@
   height: 70%;
   margin-left: -35%;
   margin-top: -35%;
-  animation-delay: 0.12s;
+  animation-delay: calc(var(--orb-delay, 0s) + 0.12s);
 }
 
 .body-orb .orb-ring-75 {
@@ -130,7 +131,7 @@
   height: 50%;
   margin-left: -25%;
   margin-top: -25%;
-  animation-delay: 0.35s;
+  animation-delay: calc(var(--orb-delay, 0s) + 0.35s);
 }
 
 /* Innermost ring (30%) – wider spacing. */
@@ -143,10 +144,10 @@
   margin-left: -15%;
   margin-top: -15%;
   border-radius: 50%;
-  border: 1px solid var(--accent-lavender);
+  border: 1px solid var(--orb-line-color);
   background: transparent;
-  animation: orb-pulse-breathe 2s var(--ease-in-out) infinite alternate;
-  animation-delay: 0.5s;
+  animation: orb-pulse-breathe var(--orb-duration, 1.25s) var(--ease-in-out) infinite alternate;
+  animation-delay: calc(var(--orb-delay, 0s) + 0.5s);
   transform-origin: 50% 50%;
   pointer-events: none;
   box-sizing: border-box;
@@ -171,11 +172,11 @@
 .body-orb.selected .orb-glow .orb-ring,
 .body-orb.selected .orb-glow .orb-dot {
   animation: none;
-  border-color: var(--accent-lavender);
+  border-color: var(--orb-line-color);
 }
 
 .body-orb.selected .orb-glow .orb-dot {
-  background: rgba(217, 197, 224, 0.6);
+  background: rgba(194, 138, 201, 0.6);
 }
 
 @keyframes orb-pulse-breathe {
@@ -187,14 +188,14 @@
   }
 }
 
-/* Side labels: to the RIGHT of outline. */
+/* Side labels: to the RIGHT of outline, close so they stay on screen on small viewports. */
 .body-labels-side {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 100%;
-  margin-left: 10px;
-  width: 88px;
+  margin-left: 0;
+  width: 72px;
   pointer-events: none;
 }
 
@@ -246,8 +247,8 @@
 
 @media (min-width: 400px) {
   .body-labels-side {
-    margin-left: 12px;
-    width: 96px;
+    margin-left: 2px;
+    width: 80px;
   }
   .body-label {
     font-size: 15px;

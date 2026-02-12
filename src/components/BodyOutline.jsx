@@ -124,6 +124,8 @@ export default function BodyOutline({ selectedAreas, onSelectArea }) {
           style={{
             left: `${x}%`,
             top: `${y}%`,
+            '--orb-delay': `${(i * 0.22) % 1.4}s`,
+            '--orb-duration': `${1.15 + (i % 4) * 0.14}s`,
           }}
           onClick={() => onSelectArea(area)}
           onMouseEnter={() => setHoveredArea(area)}

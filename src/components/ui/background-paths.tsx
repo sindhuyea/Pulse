@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import "./background-paths.css";
 
 function FloatingPaths({ position, color = "#C2B4C6" }: { position: number; color?: string }) {
     const paths = Array.from({ length: 36 }, (_, i) => ({
@@ -17,9 +18,8 @@ function FloatingPaths({ position, color = "#C2B4C6" }: { position: number; colo
     }));
 
     return (
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="background-paths-floating">
             <svg
-                className="w-full h-full"
                 viewBox="0 0 696 316"
                 fill="none"
             >
@@ -31,10 +31,10 @@ function FloatingPaths({ position, color = "#C2B4C6" }: { position: number; colo
                         stroke={color}
                         strokeWidth={path.width}
                         strokeOpacity={0.1 + path.id * 0.03}
-                        initial={{ pathLength: 0.3, opacity: 0.6 }}
+                        initial={{ pathLength: 0.55, opacity: 0.75 }}
                         animate={{
                             pathLength: 1,
-                            opacity: [0.3, 0.6, 0.3],
+                            opacity: [0.5, 0.75, 0.5],
                             pathOffset: [0, 1, 0],
                         }}
                         transition={{
@@ -62,9 +62,11 @@ export function BackgroundPaths({
 
     if (backgroundOnly) {
         return (
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <FloatingPaths position={1} color={color} />
-                <FloatingPaths position={-1} color={color} />
+            <div className="background-paths-root">
+                <div className="background-paths-inner">
+                    <FloatingPaths position={1} color={color} />
+                    <FloatingPaths position={-1} color={color} />
+                </div>
             </div>
         );
     }

@@ -25,13 +25,29 @@
   z-index: 0;
 }
 
+/* 2) Headline + tagline: soft fade in from above (calm, gentle) */
 .home-header {
   position: relative;
   z-index: 1;
   text-align: center;
   margin-bottom: var(--space-xl);
+  animation: home-header-enter 1.5s var(--ease-calm) 1.5s forwards;
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
+@keyframes home-header-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3) Light pulsating on headline and tagline */
 .home-title {
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 10vw, 3.5rem);
@@ -39,6 +55,7 @@
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: var(--space-s);
+  animation: home-title-pulse 3s var(--ease-calm) 2.4s infinite alternate;
 }
 
 .home-tagline {
@@ -47,11 +64,47 @@
   font-weight: 400;
   color: var(--text-primary);
   opacity: 0.9;
+  animation: home-tagline-pulse 3s var(--ease-calm) 2.4s infinite alternate;
 }
 
+@keyframes home-title-pulse {
+  from {
+    opacity: 0.88;
+    transform: scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes home-tagline-pulse {
+  from {
+    opacity: 0.82;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+/* 4) CTA soft fade in from below (calm, gentle) */
 .home-cta-wrap {
   position: relative;
   z-index: 1;
+  animation: home-cta-enter 1.3s var(--ease-calm) 2.4s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes home-cta-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Button styles moved to index.css for global consistency */

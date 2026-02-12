@@ -1,0 +1,125 @@
+.poem-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-m);
+}
+
+/* Intro: "thank you for sharing" — fade in, hold, fade out */
+.poem-intro-phrase {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+}
+
+@keyframes poem-intro-fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  /* fade in (0–800ms of 2800ms) */
+  29% {
+    opacity: 1;
+  }
+  /* hold, then fade out (2200–2800ms) */
+  79% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.poem-screen-inner {
+  width: 100%;
+  max-width: 320px;
+}
+
+.poem-content-enter {
+  animation: poem-content-fade-in 0.6s var(--ease-calm) forwards;
+}
+
+@keyframes poem-content-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.poem-content-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.poem-content-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-s);
+}
+
+.poem-content-subtitle {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.poem-screen .haiku-block {
+  margin-bottom: 0;
+}
+
+.poem-screen .haiku-bubble {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-m);
+  background: var(--surface-color);
+  padding: var(--space-xl);
+}
+
+.poem-screen .haiku-line {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-s);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.8s var(--ease-calm), transform 0.8s var(--ease-calm);
+}
+
+.poem-screen .haiku-line:last-child {
+  margin-bottom: 0;
+}
+
+.poem-screen .haiku-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.poem-continue-wrap {
+  margin-top: var(--space-xl);
+  text-align: center;
+  animation: poem-continue-in 0.6s var(--ease-calm) forwards;
+}
+
+@keyframes poem-continue-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
