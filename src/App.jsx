@@ -1,4 +1,5 @@
 import React, { useReducer, useMemo, useState } from 'react'
+import { BackgroundPaths } from './components/ui/background-paths'
 import HomeScreen from './components/screens/HomeScreen'
 import NameScreen from './components/screens/NameScreen'
 import BodyCheckScreen from './components/screens/BodyCheckScreen'
@@ -14,7 +15,7 @@ import {
   setPreference,
   getStressInputSummary,
 } from './state/inputState'
-import { getRecommendations } from './lib/mockAI'
+import { getRecommendations, getStressPatternSummary } from './lib/mockAI'
 import './index.css'
 import './lib/animations.css'
 
@@ -31,7 +32,7 @@ function appReducer(state, action) {
     case 'I_DONT_KNOW':
       return { ...state, screen: 'tarot' }
     case 'SELECT_TAROT':
-      return { ...state, ...setTarotChoice(state, action.cardId), screen: 'reflection' }
+      return { ...state, ...setTarotChoice(state, action.cardId), screen: 'recommendations' }
     case 'SET_PREFERENCE':
       return setPreference(state, action.key, action.value)
     case 'GUIDE_ME':
@@ -58,6 +59,10 @@ export default function App() {
     () => getRecommendations(inputSummary, 3),
     [inputSummary]
   )
+  const stressPatternSummary = useMemo(
+    () => getStressPatternSummary(inputSummary),
+    [inputSummary]
+  )
 
   if (calibrating) {
     return (
@@ -69,6 +74,9 @@ export default function App() {
 
   return (
     <div className="app-container">
+      <div className="app-background" aria-hidden>
+        <BackgroundPaths backgroundOnly color="#C28AC9" />
+      </div>
       {state.screen === 'home' && (
         <div key="home" className="screen-enter">
           <HomeScreen onCheckIn={() => dispatch({ type: 'START_CHECK_IN' })} />
@@ -119,6 +127,7 @@ export default function App() {
         <div key="recommendations" className="screen-enter">
           <RecommendationScreen
             recommendations={recommendations}
+            stressPatternSummary={stressPatternSummary}
             onMore={() => dispatch({ type: 'MORE' })}
             onViewInsights={() => dispatch({ type: 'VIEW_INSIGHTS' })}
           />

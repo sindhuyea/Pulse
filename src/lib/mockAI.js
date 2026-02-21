@@ -62,6 +62,8 @@ const INTERVENTIONS = [
     body: "A calming practice that helps reduce anxiety quickly. Gently hum a single note for one full exhale and feel the vibration in your chest.",
     insight: "This has helped you before during mental overload on workdays",
     cta: 'hum with me →',
+    actionLabel: 'hum with me',
+    actionHref: null,
     tags: ['quick', 'inside', 'alone'],
     icon: 'hum',
   },
@@ -72,6 +74,8 @@ const INTERVENTIONS = [
     body: "We've mapped a short walk near you meant for decompression — quiet streets, gentle pacing, and natural pauses.",
     insight: "Movement and fresh air tend to help more than solo techniques on busy days",
     cta: 'start my walk →',
+    actionLabel: 'Open in Maps',
+    actionHref: 'https://www.google.com/maps',
     tags: ['slow', 'outside'],
     icon: 'walk',
   },
@@ -82,6 +86,8 @@ const INTERVENTIONS = [
     body: "Join a local or online yoga class focused on opening the chest and releasing tension. Moves are slow, supportive, and grounding.",
     insight: "Social connection tends to help more than solo techniques on workdays",
     cta: 'find session →',
+    actionLabel: 'Find a session',
+    actionHref: 'https://www.google.com/search?q=yoga+class+near+me',
     tags: ['slow', 'inside', 'together'],
     icon: 'yoga',
   },
@@ -92,6 +98,8 @@ const INTERVENTIONS = [
     body: "Breathe in for four, hold for four, breathe out for six. Three rounds to reset your nervous system and soften your chest.",
     insight: "Quick resets work well for you when time is limited",
     cta: 'breathe with me →',
+    actionLabel: 'breathe with me',
+    actionHref: null,
     tags: ['quick', 'inside', 'alone'],
     icon: 'breath',
   },
@@ -102,6 +110,8 @@ const INTERVENTIONS = [
     body: "Send a short message or call someone who grounds you. You don't need to explain — just connect.",
     insight: "Past sessions show connecting with friends reduces your stress",
     cta: 'who might I call? →',
+    actionLabel: 'Open contacts',
+    actionHref: null,
     tags: ['quick', 'together'],
     icon: 'call',
   },
@@ -112,6 +122,8 @@ const INTERVENTIONS = [
     body: "Simple stretches to release tension in your shoulders and neck. Five minutes at your desk or on the floor.",
     insight: "Body-based practices fit your preference for quick, inside options",
     cta: 'guide me →',
+    actionLabel: 'guide me',
+    actionHref: null,
     tags: ['quick', 'inside', 'alone'],
     icon: 'stretch',
   },
@@ -170,9 +182,9 @@ const TAROT_BOOST = {
  */
 export function getRecommendations(inputSummary, count = 3) {
   const { preferences, areas, tarot } = inputSummary;
-  const wantAlone = preferences.social === 'alone';
-  const wantInside = preferences.place === 'inside';
-  const wantQuick = preferences.pace === 'quick';
+  const wantAlone = preferences.social < 50;
+  const wantInside = preferences.place < 50;
+  const wantQuick = preferences.pace < 50;
 
   const scored = INTERVENTIONS.map((item) => {
     let score = 0;
@@ -227,6 +239,34 @@ export function getRecommendations(inputSummary, count = 3) {
   }));
 }
 
+/**
+ * Returns a 2–3 line summary of what the user's choices suggest about their stress pattern.
+ * Same tone: warm, human, non-clinical.
+ */
+export function getStressPatternSummary(inputSummary) {
+  const { preferences, areas, tarot } = inputSummary;
+  const wantAlone = preferences.social < 50;
+  const wantInside = preferences.place < 50;
+  const wantQuick = preferences.pace < 50;
+
+  const social = wantAlone ? 'time alone' : 'connection with others';
+  const place = wantInside ? 'somewhere indoors' : 'getting outside';
+  const pace = wantQuick ? 'something quick' : 'a slower, gentler pace';
+
+  let bodyLine = '';
+  if (areas && areas.length > 0) {
+    const list = areas.length === 1 ? areas[0] : areas.slice(0, -1).join(', ') + ' and ' + areas[areas.length - 1];
+    bodyLine = ` You're holding tension in your ${list}, which often goes with mental or emotional load.`;
+  }
+
+  let tarotLine = '';
+  if (tarot === 'waves') tarotLine = " Today's draw leans toward flow and change.";
+  if (tarot === 'stones') tarotLine = " Today's draw leans toward grounding and steadiness.";
+  if (tarot === 'wind') tarotLine = " Today's draw leans toward breath and release.";
+
+  return `You're drawn to ${social}, ${place}, and ${pace}.${bodyLine}${tarotLine}`;
+}
+
 function getContextAwareInsight(item, inputSummary) {
   const { areas, tarot } = inputSummary;
   const base = item.insight;
@@ -234,7 +274,7 @@ function getContextAwareInsight(item, inputSummary) {
     return `${base} Based on where you're holding tension today.`;
   }
   if (tarot) {
-    return `${base} Reflecting today's draw.`;
+    return `${base} Reflecting today's draw.`; // template literal: apostrophe ok
   }
   return base;
 }

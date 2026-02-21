@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   padding: var(--space-l) var(--space-m) var(--space-xl);
+  container-type: inline-size;
+  container-name: tarot-screen;
 }
 
 .tarot-screen .screen-header {
@@ -32,9 +34,36 @@
   flex-wrap: wrap;
 }
 
+@container tarot-screen (max-width: 420px) {
+  .tarot-screen {
+    padding-top: calc(var(--space-l) * 2);
+    padding-bottom: calc(var(--space-l) * 2);
+  }
+
+  .tarot-screen .screen-header {
+    margin-bottom: calc(var(--space-l) * 2);
+  }
+
+  .tarot-cards {
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 0 2px;
+  }
+
+  .tarot-card {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: 120 / 168;
+    max-width: 120px;
+  }
+}
+
 .tarot-card {
-  width: 100px;
-  height: 140px;
+  width: 120px;
+  height: 168px;
   padding: 0;
   border: none;
   background: none;
@@ -73,14 +102,20 @@
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border: 1px solid var(--text-primary);
   border-radius: var(--radius-m);
-  background: var(--surface-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(67, 58, 67, 0.05);
   transition: box-shadow var(--duration-m) var(--ease-in-out);
+}
+
+/* Card front: background matches image; purple outline */
+.tarot-card-outline .tarot-card-front {
+  background: #F5F5F5;
+  border: 2px solid var(--accent-lavender);
+  box-shadow:
+    0 4px 16px rgba(67, 58, 67, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .tarot-card:hover .tarot-card-face {
@@ -90,17 +125,25 @@
 .tarot-card-back {
   transform: rotateY(180deg);
   background: var(--accent-taupe);
+  border: 2px solid var(--accent-lavender);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .tarot-icon {
-  width: 48px;
-  height: 48px;
-  color: var(--text-primary);
-}
-
-.tarot-icon svg {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.tarot-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .tarot-card-label {

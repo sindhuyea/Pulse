@@ -82,3 +82,48 @@
 .recommendation-card-insight span {
   flex: 1;
 }
+
+.recommendation-card-action {
+  margin-top: var(--space-xs);
+}
+
+.recommendation-card-action-btn {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  border-radius: var(--radius-pill);
+  padding: var(--space-xs) var(--space-m);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity var(--duration-m) var(--ease-in-out);
+}
+
+.recommendation-card-action-btn:hover {
+  opacity: 0.88;
+}
+
+.recommendation-card-action-btn:active {
+  transform: scale(0.992);
+}
+
+/* Summary card (stress pattern) at top: same card style, no insight/action */
+.recommendation-card-summary .recommendation-card-summary-icon {
+  background: rgba(194, 138, 201, 0.2);
+  border-color: rgba(194, 138, 201, 0.5);
+}
+
+.recommendation-card-summary .recommendation-card-summary-icon::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-lavender-neon, #C28AC9);
+  opacity: 0.8;
+  margin: auto;
+}

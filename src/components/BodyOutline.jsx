@@ -12,33 +12,32 @@ const LABELS = {
   legs: 'legs',
 }
 
-// Nudge orbs up: head 2.5%; all others 5.5%; shoulder right 16%
+// Nudge orbs up: head 2.5%; all others 5.5%
 const HEAD_Y_NUDGE = 2.5
 const ORB_Y_NUDGE = 5.5
-const SHOULDER_X_NUDGE = 16
 const SHOULDER_Y_NUDGE = 3.5
 
 const nudgeY = (y, nudge) => Math.max(1, y - nudge)
 
-// Defaults when no calibration is stored (one orb per area; right hand, right leg positions)
+// Defaults when no calibration is stored; head/chest/stomach/legs 5% left, shoulder 10% left
 const DEFAULT_ENTRIES = [
-  { area: 'head', x: 50, y: 9 },
-  { area: 'shoulders', x: 66, y: 22.5 },
-  { area: 'chest', x: 50, y: 29.5 },
-  { area: 'lower back', x: 50, y: 42.5 },
+  { area: 'head', x: 45, y: 9 },
+  { area: 'shoulders', x: 65, y: 22.5 },
+  { area: 'chest', x: 45, y: 29.5 },
+  { area: 'lower back', x: 45, y: 42.5 },
   { area: 'hands', x: 76, y: 52.5 },
-  { area: 'legs', x: 61.5, y: 69.5 },
+  { area: 'legs', x: 56.5, y: 69.5 },
 ]
 
 function buildEntriesFromStored(stored) {
   if (!stored) return null
   const entries = [
-    { area: 'head', x: stored.head.x, y: nudgeY(stored.head.y, HEAD_Y_NUDGE) },
-    { area: 'shoulders', x: Math.min(98, stored.shoulders.x + SHOULDER_X_NUDGE), y: nudgeY(stored.shoulders.y, SHOULDER_Y_NUDGE) },
-    { area: 'chest', x: stored.chest.x, y: nudgeY(stored.chest.y, ORB_Y_NUDGE) },
-    { area: 'lower back', x: stored.lowerBack.x, y: nudgeY(stored.lowerBack.y, ORB_Y_NUDGE) },
+    { area: 'head', x: stored.head.x - 5, y: nudgeY(stored.head.y, HEAD_Y_NUDGE) },
+    { area: 'shoulders', x: 65, y: nudgeY(stored.shoulders.y, SHOULDER_Y_NUDGE) },
+    { area: 'chest', x: stored.chest.x - 5, y: nudgeY(stored.chest.y, ORB_Y_NUDGE) },
+    { area: 'lower back', x: stored.lowerBack.x - 5, y: nudgeY(stored.lowerBack.y, ORB_Y_NUDGE) },
     { area: 'hands', x: stored.hands.x, y: nudgeY(stored.hands.y, ORB_Y_NUDGE) },
-    { area: 'legs', x: stored.legs.x, y: nudgeY(stored.legs.y, ORB_Y_NUDGE) },
+    { area: 'legs', x: stored.legs.x - 5, y: nudgeY(stored.legs.y, ORB_Y_NUDGE) },
   ]
   return entries
 }
@@ -111,11 +110,14 @@ export default function BodyOutline({ selectedAreas, onSelectArea }) {
 
   return (
     <div className="body-outline-wrap">
-      <div
-        className="body-svg-inner"
-        aria-hidden
-        dangerouslySetInnerHTML={{ __html: bodyOutlineSvg }}
-      />
+      <div className="body-svg-inner" aria-hidden>
+        <div
+          className="body-fill"
+          style={{ clipPath: 'url(#bodyOutlineClip)' }}
+          aria-hidden
+        />
+        <div className="body-svg-layer" dangerouslySetInnerHTML={{ __html: bodyOutlineSvg }} />
+      </div>
       {orbEntries.map(({ area, x, y }, i) => (
         <button
           key={`${area}-${i}`}
@@ -133,13 +135,7 @@ export default function BodyOutline({ selectedAreas, onSelectArea }) {
           aria-label={LABELS[area]}
           aria-pressed={selectedAreas.includes(area)}
         >
-          <span className="orb-center">
-            <span className="orb-glow">
-              <span className="orb-ring orb-ring-90" />
-              <span className="orb-ring orb-ring-75" />
-              <span className="orb-dot" />
-            </span>
-          </span>
+          <span className="ball" />
         </button>
       ))}
       {showLabels && (

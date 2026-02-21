@@ -1,16 +1,16 @@
 import React from 'react'
 import { User, Users, Home, Trees, Zap, Turtle } from 'lucide-react'
-import { PREFERENCE_KEYS, PREFERENCE_OPTIONS } from '../state/inputState'
+import { PREFERENCE_KEYS } from '../state/inputState'
 import './styles/PreferenceToggles.css'
 
 /**
- * Figma Make–style toggles: track with two crossfading themed backgrounds + thumb with icon.
- * Motion: track transition 300ms, thumb and background opacity 500ms ease-in-out.
+ * Continuous preference sliders (0–100). Both ends labeled with icon + text.
+ * Values are stored as numbers; mock AI derives booleans at 50.
  */
 
-function ToggleSparkle({ trigger }) {
+function SliderSparkle({ trigger }) {
   return (
-    <div key={trigger} className="pref-sparkle" aria-hidden>
+    <div key={trigger} className="pref-sparkle pref-sparkle-slider" aria-hidden>
       <span className="pref-sparkle-dot" />
       <span className="pref-sparkle-dot pref-sparkle-dot-2" />
       <span className="pref-sparkle-dot pref-sparkle-dot-3" />
@@ -18,175 +18,93 @@ function ToggleSparkle({ trigger }) {
   )
 }
 
-function AloneTogetherToggle({ value, onChange }) {
-  const isAlone = value === 'alone'
+function PreferenceSlider({
+  value,
+  leftLabel,
+  rightLabel,
+  leftIcon: LeftIcon,
+  rightIcon: RightIcon,
+  onChange,
+}) {
+  const sliderValue = typeof value === 'number' ? value : 0
   const [sparkle, setSparkle] = React.useState(0)
 
-  const handleClick = () => {
-    onChange(isAlone ? 'together' : 'alone')
+  const handleInputChange = (e) => {
+    const num = Number(e.target.value)
+    onChange(num)
     setSparkle((s) => s + 1)
   }
 
   return (
-    <div className="pref-figma-wrap">
-      <button
-        type="button"
-        className="pref-figma-track"
-        onClick={handleClick}
-        aria-label={isAlone ? 'Switch to together' : 'Switch to alone'}
-      >
-        <ToggleSparkle trigger={sparkle} />
-        {/* Alone background */}
-        <div className={`pref-figma-bg ${isAlone ? 'pref-figma-bg-on' : 'pref-figma-bg-off'}`}>
-          <div className="pref-figma-gradient pref-figma-gradient-calm" />
-          <div className="pref-figma-detail pref-alone-spotlight" />
-          <div className="pref-figma-detail pref-alone-chair" />
-          <div className="pref-figma-detail pref-alone-tree" />
-          <div className="pref-figma-detail pref-alone-meditation" />
+    <div className="pref-slider-wrap">
+      <div className="pref-slider-row">
+        <div className="pref-slider-end pref-slider-end-left" aria-hidden>
+          <LeftIcon size={20} strokeWidth={1.75} className="pref-slider-end-icon" />
+          <span className="pref-slider-end-text">{leftLabel}</span>
         </div>
-        {/* Together background */}
-        <div className={`pref-figma-bg ${!isAlone ? 'pref-figma-bg-on' : 'pref-figma-bg-off'}`}>
-          <div className="pref-figma-gradient pref-figma-gradient-warm" />
-          <div className="pref-figma-detail pref-together-glow-1" />
-          <div className="pref-figma-detail pref-together-glow-2" />
-          <div className="pref-figma-detail pref-together-person-1" />
-          <div className="pref-figma-detail pref-together-person-2" />
-          <div className="pref-figma-detail pref-together-person-3" />
-          <div className="pref-figma-detail pref-together-trees" />
-          <div className="pref-figma-detail pref-together-heart" />
+        <div className="pref-slider-track-wrap">
+          <SliderSparkle trigger={sparkle} />
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={sliderValue}
+            onChange={handleInputChange}
+            className="pref-slider-input"
+            aria-label={`${leftLabel} to ${rightLabel}; current ${sliderValue}`}
+          />
+          <div
+            className="pref-slider-thumb-fill"
+            style={{ width: `${sliderValue}%` }}
+            aria-hidden
+          />
         </div>
-        <div className={`pref-figma-thumb ${isAlone ? 'pref-figma-thumb-left' : 'pref-figma-thumb-right'}`}>
-          {isAlone ? (
-            <User className="pref-figma-icon" size={20} strokeWidth={1.75} />
-          ) : (
-            <Users className="pref-figma-icon" size={20} strokeWidth={1.75} />
-          )}
+        <div className="pref-slider-end pref-slider-end-right" aria-hidden>
+          <RightIcon size={20} strokeWidth={1.75} className="pref-slider-end-icon" />
+          <span className="pref-slider-end-text">{rightLabel}</span>
         </div>
-      </button>
-      <span key={value} className="pref-figma-label">{value}</span>
+      </div>
     </div>
   )
 }
 
-function InsideOutsideToggle({ value, onChange }) {
-  const isInside = value === 'inside'
-  const [sparkle, setSparkle] = React.useState(0)
-
-  const handleClick = () => {
-    onChange(isInside ? 'outside' : 'inside')
-    setSparkle((s) => s + 1)
-  }
-
-  return (
-    <div className="pref-figma-wrap">
-      <button
-        type="button"
-        className="pref-figma-track"
-        onClick={handleClick}
-        aria-label={isInside ? 'Switch to outside' : 'Switch to inside'}
-      >
-        <ToggleSparkle trigger={sparkle} />
-        <div className={`pref-figma-bg ${isInside ? 'pref-figma-bg-on' : 'pref-figma-bg-off'}`}>
-          <div className="pref-figma-gradient pref-figma-gradient-interior" />
-          <div className="pref-figma-detail pref-inside-furniture-1" />
-          <div className="pref-figma-detail pref-inside-furniture-2" />
-          <div className="pref-figma-detail pref-inside-window" />
-          <div className="pref-figma-detail pref-inside-glow" />
-        </div>
-        <div className={`pref-figma-bg ${!isInside ? 'pref-figma-bg-on' : 'pref-figma-bg-off'}`}>
-          <div className="pref-figma-gradient pref-figma-gradient-sky" />
-          <div className="pref-figma-detail pref-outside-moon" />
-          <div className="pref-figma-detail pref-outside-moon-glow" />
-          <div className="pref-figma-detail pref-outside-cloud-1" />
-          <div className="pref-figma-detail pref-outside-cloud-2" />
-          <div className="pref-figma-detail pref-outside-tree-1" />
-          <div className="pref-figma-detail pref-outside-tree-2" />
-          <div className="pref-figma-detail pref-outside-tree-3" />
-          <div className="pref-figma-detail pref-outside-tree-canopy-2" />
-          <div className="pref-figma-detail pref-outside-grass" />
-        </div>
-        <div className={`pref-figma-thumb ${isInside ? 'pref-figma-thumb-left' : 'pref-figma-thumb-right'}`}>
-          {isInside ? (
-            <Home className="pref-figma-icon" size={20} strokeWidth={1.75} />
-          ) : (
-            <Trees className="pref-figma-icon" size={20} strokeWidth={1.75} />
-          )}
-        </div>
-      </button>
-      <span key={value} className="pref-figma-label">{value}</span>
-    </div>
-  )
-}
-
-function QuickSlowToggle({ value, onChange }) {
-  const isQuick = value === 'quick'
-  const [sparkle, setSparkle] = React.useState(0)
-
-  const handleClick = () => {
-    onChange(isQuick ? 'slow' : 'quick')
-    setSparkle((s) => s + 1)
-  }
-
-  return (
-    <div className="pref-figma-wrap">
-      <button
-        type="button"
-        className="pref-figma-track"
-        onClick={handleClick}
-        aria-label={isQuick ? 'Switch to slow' : 'Switch to quick'}
-      >
-        <ToggleSparkle trigger={sparkle} />
-        <div className={`pref-figma-bg ${isQuick ? 'pref-figma-bg-on' : 'pref-figma-bg-off'}`}>
-          <div className="pref-figma-gradient pref-figma-gradient-energetic" />
-          <div className="pref-figma-detail pref-quick-streak-1" />
-          <div className="pref-figma-detail pref-quick-streak-2" />
-          <div className="pref-figma-detail pref-quick-streak-3" />
-          <div className="pref-figma-detail pref-quick-bolt" />
-          <div className="pref-figma-detail pref-quick-circle" />
-          <div className="pref-figma-detail pref-quick-particle-1" />
-          <div className="pref-figma-detail pref-quick-particle-2" />
-          <div className="pref-figma-detail pref-quick-particle-3" />
-        </div>
-        <div className={`pref-figma-bg ${!isQuick ? 'pref-figma-bg-on' : 'pref-figma-bg-off'}`}>
-          <div className="pref-figma-gradient pref-figma-gradient-calm" />
-          <div className="pref-figma-detail pref-slow-waves-1" />
-          <div className="pref-figma-detail pref-slow-waves-2" />
-          <div className="pref-figma-detail pref-slow-cloud-1" />
-          <div className="pref-figma-detail pref-slow-cloud-2" />
-          <div className="pref-figma-detail pref-slow-stone-1" />
-          <div className="pref-figma-detail pref-slow-stone-2" />
-          <div className="pref-figma-detail pref-slow-curve" />
-          <div className="pref-figma-detail pref-slow-ripple" />
-        </div>
-        <div className={`pref-figma-thumb ${isQuick ? 'pref-figma-thumb-left' : 'pref-figma-thumb-right'}`}>
-          {isQuick ? (
-            <Zap className="pref-figma-icon" size={20} strokeWidth={1.75} />
-          ) : (
-            <Turtle className="pref-figma-icon" size={20} strokeWidth={1.75} />
-          )}
-        </div>
-      </button>
-      <span key={value} className="pref-figma-label">{value}</span>
-    </div>
-  )
-}
-
-const TOGGLE_COMPONENTS = {
-  social: AloneTogetherToggle,
-  place: InsideOutsideToggle,
-  pace: QuickSlowToggle,
+const SLIDER_CONFIG = {
+  social: {
+    leftLabel: 'alone',
+    rightLabel: 'together',
+    leftIcon: User,
+    rightIcon: Users,
+  },
+  place: {
+    leftLabel: 'inside',
+    rightLabel: 'outside',
+    leftIcon: Home,
+    rightIcon: Trees,
+  },
+  pace: {
+    leftLabel: 'quick',
+    rightLabel: 'slow',
+    leftIcon: Zap,
+    rightIcon: Turtle,
+  },
 }
 
 export default function PreferenceToggles({ preferences, onChange }) {
   return (
-    <div className="preference-toggles">
+    <div className="preference-toggles preference-toggles-sliders">
       <div className="preference-row">
         {PREFERENCE_KEYS.map((key) => {
-          const Comp = TOGGLE_COMPONENTS[key]
+          const config = SLIDER_CONFIG[key]
+          const raw = preferences[key]
+          const value = typeof raw === 'number' ? raw : (raw === config.rightLabel ? 100 : 0)
           return (
-            <Comp
+            <PreferenceSlider
               key={key}
-              value={preferences[key]}
+              value={value}
+              leftLabel={config.leftLabel}
+              rightLabel={config.rightLabel}
+              leftIcon={config.leftIcon}
+              rightIcon={config.rightIcon}
               onChange={(next) => onChange(key, next)}
             />
           )

@@ -19,7 +19,7 @@ function SparkIcon() {
   )
 }
 
-export default function RecommendationCard({ title, body, insight, icon }) {
+export default function RecommendationCard({ title, body, insight, icon, actionLabel, actionHref }) {
   const IconComponent = CARD_ICONS[icon] || CARD_ICONS.breath
 
   return (
@@ -37,6 +37,24 @@ export default function RecommendationCard({ title, body, insight, icon }) {
         <div className="recommendation-card-insight">
           <SparkIcon />
           <span>{insight}</span>
+        </div>
+      )}
+      {actionLabel && (
+        <div className="recommendation-card-action">
+          {actionHref ? (
+            <a
+              href={actionHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="recommendation-card-action-btn"
+            >
+              {actionLabel}
+            </a>
+          ) : (
+            <button type="button" className="recommendation-card-action-btn">
+              {actionLabel}
+            </button>
+          )}
         </div>
       )}
     </article>

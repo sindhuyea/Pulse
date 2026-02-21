@@ -1,11 +1,9 @@
 import React from 'react'
 import '../styles/HomeScreen.css'
-import { BackgroundPaths } from '../ui/background-paths'
 
 export default function HomeScreen({ onCheckIn }) {
   return (
     <div className="screen home-screen">
-      <BackgroundPaths backgroundOnly={true} color="#C28AC9" />
       <div className="holo-blur home-glow animate-pulse-glow" aria-hidden />
       <header className="home-header">
         <h1 className="home-title">Pulse</h1>

@@ -177,6 +177,7 @@ p {
 }
 
 .app-container {
+  position: relative;
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
@@ -184,6 +185,14 @@ p {
   flex-direction: column;
   padding-bottom: 80px;
   background: var(--bg-color);
+}
+
+.app-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 svg {
@@ -205,6 +214,8 @@ svg {
 }
 
 .screen-enter {
+  position: relative;
+  z-index: 1;
   animation: screen-enter var(--duration-slow) var(--ease-in-out) forwards;
 }
 

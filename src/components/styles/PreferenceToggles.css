@@ -1,7 +1,152 @@
 /* Figma Make–style toggles: polished track, themed backgrounds, soft motion */
+/* Slider variant: range input with thumb and end icons */
 
 .preference-toggles {
   width: 100%;
+}
+
+/* --- Slider layout: one slider per line --- */
+.preference-toggles-sliders .preference-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-l);
+}
+
+.pref-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.pref-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.pref-slider-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  color: rgba(107, 92, 110, 0.7);
+  transition: color 0.25s ease;
+}
+
+.pref-slider-end-icon {
+  flex-shrink: 0;
+}
+
+.pref-slider-end-text {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: inherit;
+  text-transform: lowercase;
+}
+
+.pref-slider-track-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.pref-slider-input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pref-slider-input:focus {
+  outline: none;
+}
+
+.pref-slider-input::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 9999px;
+  background: rgba(222, 214, 225, 0.6);
+  border: 1px solid #9B8A9E;
+}
+
+.pref-slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #C4B5C8;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  margin-top: -9px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.pref-slider-input::-webkit-slider-thumb:hover {
+  box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.12);
+}
+
+.pref-slider-input::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.96);
+}
+
+.pref-slider-input::-moz-range-track {
+  height: 10px;
+  border-radius: 9999px;
+  background: rgba(222, 214, 225, 0.6);
+  border: 1px solid #9B8A9E;
+}
+
+.pref-slider-input::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #C4B5C8;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.pref-slider-input::-moz-range-thumb:hover {
+  box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.12);
+}
+
+.pref-slider-input::-moz-range-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.96);
+}
+
+.pref-slider-thumb-fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 10px;
+  border-radius: 9999px 0 0 9999px;
+  background: linear-gradient(to right, rgba(194, 138, 201, 0.25), rgba(222, 214, 225, 0.4));
+  pointer-events: none;
+  z-index: 0;
+  transition: width 0.28s ease-in-out;
+}
+
+.pref-sparkle-slider {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .preference-row {

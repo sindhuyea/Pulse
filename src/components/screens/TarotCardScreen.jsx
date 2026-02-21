@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
 import { TAROT_CARDS } from '../../state/inputState'
+import tarotWavesImg from '../../assets/tarot/tarot-waves.png'
+import tarotStonesImg from '../../assets/tarot/tarot-stones.png'
+import tarotWindImg from '../../assets/tarot/tarot-wind.png'
 import '../styles/TarotCardScreen.css'
+
+const TAROT_IMAGES = {
+  waves: tarotWavesImg,
+  stones: tarotStonesImg,
+  wind: tarotWindImg,
+}
 
 const FLIP_DURATION_MS = 950
 
@@ -25,7 +34,7 @@ export default function TarotCardScreen({ onSelectCard }) {
           <button
             key={card.id}
             type="button"
-            className={`tarot-card ${flippedId === card.id ? 'flipped' : ''}`}
+            className={`tarot-card tarot-card-outline ${flippedId === card.id ? 'flipped' : ''}`}
             onClick={() => handleSelect(card.id)}
             aria-label={`Pick card: ${card.name}`}
             disabled={!!flippedId}
@@ -33,9 +42,11 @@ export default function TarotCardScreen({ onSelectCard }) {
             <div className="tarot-card-inner">
               <div className="tarot-card-face tarot-card-front">
                 <span className={`tarot-icon tarot-icon-${card.id}`} aria-hidden>
-                  {card.id === 'waves' && <WavesIcon />}
-                  {card.id === 'stones' && <StonesIcon />}
-                  {card.id === 'wind' && <WindIcon />}
+                  <img
+                    src={TAROT_IMAGES[card.id]}
+                    alt=""
+                    className="tarot-card-image"
+                  />
                 </span>
               </div>
               <div className="tarot-card-face tarot-card-back">
@@ -46,36 +57,5 @@ export default function TarotCardScreen({ onSelectCard }) {
         ))}
       </div>
     </div>
-  )
-}
-
-function WavesIcon() {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2">
-      <path d="M4 24c4-4 8-4 12 0s8 4 12 0 8-4 12 0" />
-      <path d="M4 30c4-4 8-4 12 0s8 4 12 0 8-4 12 0" />
-      <path d="M4 18c4-4 8-4 12 0s8 4 12 0 8-4 12 0" />
-    </svg>
-  )
-}
-
-function StonesIcon() {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2">
-      <ellipse cx="24" cy="20" rx="8" ry="5" />
-      <ellipse cx="24" cy="28" rx="10" ry="6" />
-      <ellipse cx="24" cy="36" rx="6" ry="4" />
-      <path d="M8 42h32" />
-    </svg>
-  )
-}
-
-function WindIcon() {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2">
-      <path d="M8 20c2-2 6-2 10 2s6 8 12 8 8-2 10-4" />
-      <path d="M8 28c4-2 8 0 12 4s8 6 14 6" />
-      <path d="M12 36c6 0 10-2 14 2" />
-    </svg>
   )
 }

@@ -33,9 +33,9 @@ export function createInitialState() {
     usedTarot: false,
     tarotChoice: null,
     preferences: {
-      social: 'alone',
-      place: 'inside',
-      pace: 'quick',
+      social: 0,
+      place: 0,
+      pace: 0,
     },
   };
 }
